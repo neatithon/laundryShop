@@ -1,0 +1,15 @@
+shopname:
+Kittikarn Laundry
+address:
+129 HK.Rd Suthep, Muang Chiang Mai 50200
+tel:
+053-200-209
+price:
+35
+30
+30
+10
+20
+200
+discountForMember(percent):
+10

@@ -3,6 +3,7 @@
 use Mpdf\Mpdf;
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once "IOfile.php";
 date_default_timezone_set("Asia/Bangkok");
 
 class Report {
@@ -24,12 +25,14 @@ class Report {
     private $fileName;
     private $fileType;
     private $htmlBody;
+    private $data;
 
     function __construct()
     {
-        $this->shopTel = "091-000-0463";
-        $this->shopAddress = "100/4 Moo 5 Suthep Chiang Mai 50200";
-        $this->shopName = "Laundry shop";
+        $this->data = new IOfile();
+        $this->shopTel = $this->data->shopTel;
+        $this->shopAddress = $this->data->shopAddress;
+        $this->shopName = $this->data->shopName;
         $this->location = __DIR__."/Reports";
         $this->date = date("d-m-Y H:i:s");
         $this->fileName = "/".$this->date." of ";

@@ -1,16 +1,21 @@
 <?php
+require_once "IOfile.php";
 class Payment {
     public $receivedMoney;
     public $change;
     public $totalPrice;
     public $discountPrice;
+    private $discountRate;
+    private $data;
 
     function __construct()
     {
+        $this->data = new IOfile();
         $this->receivedMoney = 0;
         $this->totalPrice = 0;
         $this->change = 0;
         $this->discountPrice = 0;
+        $this->discountRate = $this->data->discountRate/100;
     }
 
     function receiveMoney() {
@@ -46,7 +51,7 @@ class Payment {
         $inputData = readline();
         if ($inputData == "1") {
             echo "\r\nApplied 10% discount from total price.\r\n";
-            $this->discountPrice = $this->totalPrice*0.1;
+            $this->discountPrice = $this->totalPrice*$this->discountRate;
             $this->totalPrice = $this->totalPrice - $this->discountPrice;
         } else {
             echo "\r\nCalculate the total price using normal rate.\r\n";

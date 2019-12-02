@@ -1,6 +1,7 @@
 <?php
 require_once "Report.php";
 require_once "Payment.php";
+require_once "IOfile.php";
 class Laundry {
     private $prices;
     private $laundryList;
@@ -16,19 +17,27 @@ class Laundry {
     private $type;
     private $report;
     private $payment;
+    private $data;
 
     function __construct()
     {
-        $this->totalPrices = [];
-        $this->type = ["Shirt", "T-shirt", "Pants", "Blanket", "Towel", "Underware"];
-        $this->prices['Shirt'] = 5;
-        $this->prices['T-shirt'] = 10;
-        $this->prices['Pants'] = 10;
-        $this->prices['Blanket'] = 50;
-        $this->prices['Underware'] = 3;
-        $this->prices['Towel'] = 20;
         $this->report = new Report();
         $this->payment = new Payment();
+        $this->data = new IOfile();
+        $this->totalPrices = [];
+        $this->type = ["Shirt", "T-shirt", "Pants", "Blanket", "Towel", "Underware"];
+        $this->prices['Shirt'] = (int)$this->data->prices['Shirt'];
+        $this->prices['T-shirt'] = (int)$this->data->prices['T-shirt'];
+        $this->prices['Pants'] = (int)$this->data->prices['Pants'];
+        $this->prices['Blanket'] = (int)$this->data->prices['Blanket'];
+        $this->prices['Underware'] = (int)$this->data->prices['Underware'];
+        $this->prices['Towel'] = (int)$this->data->prices['Towel'];
+        // $this->prices['Shirt'] = 5;
+        // $this->prices['T-shirt'] = 10;
+        // $this->prices['Pants'] = 10;
+        // $this->prices['Blanket'] = 50;
+        // $this->prices['Underware'] = 3;
+        // $this->prices['Towel'] = 20;
     }
 
     function laundry() {
@@ -175,33 +184,33 @@ class Laundry {
 
     function checkBill() {
         echo <<<EOT
-        \r\nLaudry list.            Quality.            Price/Unit          Total\r\n
+        \r\nLaudry list.\t\t\tQuality.\t\t\tPrice/Unit\t\t\tTotal\r\n
         EOT;
         foreach ($this->type as $type) {
             switch($type) {
                 case "Shirt":
                     $this->totalPrices['Shirt'] = $this->shirtAmount*$this->prices['Shirt'];
-                    echo $type."                        ".$this->shirtAmount."                      ".$this->prices['Shirt']."             ".number_format((float)$this->totalPrices['Shirt'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t\t".$this->shirtAmount."\t\t\t\t".$this->prices['Shirt']."\t\t\t".number_format((float)$this->totalPrices['Shirt'], 2, '.', '')." ฿\r\n";
                 break;
                 case "T-shirt":
                     $this->totalPrices['T-shirt'] = $this->tShirtAmount*$this->prices['T-shirt'];
-                    echo $type."                      ".$this->tShirtAmount."                     ".$this->prices['T-shirt']."            ".number_format((float)$this->totalPrices['T-shirt'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t\t".$this->tShirtAmount."\t\t\t\t".$this->prices['T-shirt']."\t\t\t".number_format((float)$this->totalPrices['T-shirt'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Pants":
                     $this->totalPrices['Pants'] = $this->pantsAmount*$this->prices['Pants'];
-                    echo $type."                        ".$this->pantsAmount."                     ".$this->prices['Pants']."            ".number_format((float)$this->totalPrices['Pants'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t\t".$this->pantsAmount."\t\t\t\t".$this->prices['Pants']."\t\t\t".number_format((float)$this->totalPrices['Pants'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Blanket":
                     $this->totalPrices['Blanket'] = $this->blanketAmount*$this->prices['Blanket'];
-                    echo $type."                      ".$this->blanketAmount."                     ".$this->prices['Blanket']."            ".number_format((float)$this->totalPrices['Blanket'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t\t".$this->blanketAmount."\t\t\t\t".$this->prices['Blanket']."\t\t\t".number_format((float)$this->totalPrices['Blanket'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Towel":
                     $this->totalPrices['Towel'] = $this->towelAmount*$this->prices['Towel'];
-                    echo $type."                        ".$this->towelAmount."                     ".$this->prices['Towel']."            ".number_format((float)$this->totalPrices['Towel'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t\t".$this->towelAmount."\t\t\t\t".$this->prices['Towel']."\t\t\t".number_format((float)$this->totalPrices['Towel'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Underware":
                     $this->totalPrices['Underware'] = $this->underwareAmount*$this->prices['Underware'];
-                    echo $type."                    ".$this->underwareAmount."                      ".$this->prices['Underware']."             ".number_format((float)$this->totalPrices['Underware'], 2, '.', '')." ฿\r\n";
+                    echo $type."\t\t\t\t".$this->underwareAmount."\t\t\t\t".$this->prices['Underware']."\t\t\t".number_format((float)$this->totalPrices['Underware'], 2, '.', '')." ฿\r\n";
                 break;
             }
         }
@@ -209,7 +218,7 @@ class Laundry {
                 foreach ($this->totalPrices as $price) {
                     $totalPrice += $price;
                 }
-                echo "                                                          Total  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
+                echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
         $this->payment->calculation($totalPrice);
     }
 
