@@ -6,6 +6,7 @@ class Laundry {
     private $laundryList;
     private $totalPrices;
     private $customerName;
+    private $customerNumber;
     private $shirtAmount;
     private $tShirtAmount;
     private $pantsAmount;
@@ -32,6 +33,7 @@ class Laundry {
 
     function laundry() {
         $this->getCustomerName();
+        $this->getCustomerNumber();
         $this->getShirtAmount();
         $this->getTShirtAmount();
         $this->getPantsAmount();
@@ -43,10 +45,24 @@ class Laundry {
     }
 
     function getCustomerName() {
-        $this->customerName = readline("\r\nInput the customer name plase......\r\n");
-        if (strlen($this->customerName) == 0) {
-            echo "\r\nPlease input the customer name.\r\n";
+        $inputData = readline("\r\nInput the customer name.\r\n");
+        if (strlen($inputData) == 0) {
+            echo "\r\nPlease input the customer name again.\r\n";
             $this->getCustomerName();
+        } else {
+            $this->customerName = $inputData;
+        }
+    }
+
+    function getCustomerNumber() {
+        $inputData = readline("\r\nInput the phone number.\r\n");
+        if (strlen($inputData) != 10 && preg_match('/^[0-9]+$/', $inputData)) {
+            echo "\r\n\e[31mYou have inputted a wrong format!!\e[0m";
+            echo "\r\nPlease input the customer number again.\r\n";
+            $this->getCustomerNumber();
+        } else {
+            preg_match( '/^(\d{3})(\d{3})(\d{4})$/', $inputData,  $splited );
+            $this->customerNumber = $splited[1]."-".$splited[2]."-".$splited[3];
         }
     }
 
@@ -165,27 +181,27 @@ class Laundry {
             switch($type) {
                 case "Shirt":
                     $this->totalPrices['Shirt'] = $this->shirtAmount*$this->prices['Shirt'];
-                    echo $type."                        ".$this->shirtAmount."                      ".$this->prices['Shirt']."             ".$this->totalPrices['Shirt']." ฿\r\n";
+                    echo $type."                        ".$this->shirtAmount."                      ".$this->prices['Shirt']."             ".number_format((float)$this->totalPrices['Shirt'], 2, '.', '')." ฿\r\n";
                 break;
                 case "T-shirt":
                     $this->totalPrices['T-shirt'] = $this->tShirtAmount*$this->prices['T-shirt'];
-                    echo $type."                      ".$this->tShirtAmount."                     ".$this->prices['T-shirt']."            ".$this->totalPrices['T-shirt']." ฿\r\n";
+                    echo $type."                      ".$this->tShirtAmount."                     ".$this->prices['T-shirt']."            ".number_format((float)$this->totalPrices['T-shirt'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Pants":
                     $this->totalPrices['Pants'] = $this->pantsAmount*$this->prices['Pants'];
-                    echo $type."                        ".$this->pantsAmount."                     ".$this->prices['Pants']."            ".$this->totalPrices['Pants']." ฿\r\n";
+                    echo $type."                        ".$this->pantsAmount."                     ".$this->prices['Pants']."            ".number_format((float)$this->totalPrices['Pants'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Blanket":
                     $this->totalPrices['Blanket'] = $this->blanketAmount*$this->prices['Blanket'];
-                    echo $type."                      ".$this->blanketAmount."                     ".$this->prices['Blanket']."            ".$this->totalPrices['Blanket']." ฿\r\n";
+                    echo $type."                      ".$this->blanketAmount."                     ".$this->prices['Blanket']."            ".number_format((float)$this->totalPrices['Blanket'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Towel":
                     $this->totalPrices['Towel'] = $this->towelAmount*$this->prices['Towel'];
-                    echo $type."                        ".$this->towelAmount."                     ".$this->prices['Towel']."            ".$this->totalPrices['Towel']." ฿\r\n";
+                    echo $type."                        ".$this->towelAmount."                     ".$this->prices['Towel']."            ".number_format((float)$this->totalPrices['Towel'], 2, '.', '')." ฿\r\n";
                 break;
                 case "Underware":
                     $this->totalPrices['Underware'] = $this->underwareAmount*$this->prices['Underware'];
-                    echo $type."                    ".$this->underwareAmount."                      ".$this->prices['Underware']."             ".$this->totalPrices['Underware']." ฿\r\n";
+                    echo $type."                    ".$this->underwareAmount."                      ".$this->prices['Underware']."             ".number_format((float)$this->totalPrices['Underware'], 2, '.', '')." ฿\r\n";
                 break;
             }
         }
@@ -193,7 +209,7 @@ class Laundry {
                 foreach ($this->totalPrices as $price) {
                     $totalPrice += $price;
                 }
-                echo "                                                          Total  ".$totalPrice." ฿\r\n";
+                echo "                                                          Total  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
         $this->payment->calculation($totalPrice);
     }
 
@@ -205,7 +221,7 @@ class Laundry {
         EOT;
         $printSummaryOption = readline();
         if ($printSummaryOption == "1") {
-            $this->report->exportPDF($this->customerName, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change, $this->payment->discountPrice);
+            $this->report->exportPDF($this->customerName, $this->customerNumber, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change, $this->payment->discountPrice);
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         } else {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";

@@ -17,7 +17,7 @@ class Payment {
         $inputData = readline("\r\nInput the amount of money.\r\n");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->receivedMoney = (int)$inputData;
-            echo "\r\nReceived ".$this->receivedMoney." Baht from the customer.\r\n";
+            echo "\r\nReceived ".number_format((float)$this->receivedMoney, 2, '.', '')." Baht from the customer.\r\n";
         } else {
             echo "\r\n\e[31mInvalid input data\e[0m\r\nPlease input a number only.\r\n";
             $this->receiveMoney();
@@ -33,7 +33,7 @@ class Payment {
         } else {
             $this->getDiscount();
             $this->change = $this->receivedMoney - $this->totalPrice;
-            echo "\r\nChange is ".$this->change." Baht.\r\n";
+            echo "\r\nChange is ".number_format((float)$this->change, 2, '.', '')." Baht.\r\n";
         }
     }
 
