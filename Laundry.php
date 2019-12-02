@@ -1,5 +1,6 @@
 <?php
 require_once "Report.php";
+require_once "Payment.php";
 class Laundry {
     private $prices;
     private $laundryList;
@@ -13,6 +14,7 @@ class Laundry {
     private $towelAmount;
     private $type;
     private $report;
+    private $payment;
 
     function __construct()
     {
@@ -25,6 +27,7 @@ class Laundry {
         $this->prices['Underware'] = 3;
         $this->prices['Towel'] = 20;
         $this->report = new Report();
+        $this->payment = new Payment();
     }
 
     function laundry() {
@@ -186,11 +189,12 @@ class Laundry {
                 break;
             }
         }
-                $total = 0;
+                $totalPrice = 0;
                 foreach ($this->totalPrices as $price) {
-                    $total += $price;
+                    $totalPrice += $price;
                 }
-                echo "                                                          Total  ".$total." ฿\r\n";
+                echo "                                                          Total  ".$totalPrice." ฿\r\n";
+        $this->payment->calculation($totalPrice);
     }
 
     function printSumary() {
