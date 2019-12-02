@@ -2,10 +2,13 @@
 class Payment {
     public $receivedMoney;
     public $change;
+    public $totalPrice;
 
     function __construct()
     {
         $this->receivedMoney = 0;
+        $this->totalPrice = 0;
+        $this->change = 0;
     }
 
     function receiveMoney() {
@@ -20,9 +23,11 @@ class Payment {
     }
 
     function calculation($totalPrice) {
+        $this->totalPrice = $totalPrice;
         $this->receiveMoney();
-        if ($totalPrice > $this->receivedMoney) {
+        if ($this->totalPrice > $this->receivedMoney) {
             echo "\r\n\e[31mReceived money is less the the total amount.\e[0m\r\nPlease input again.\r\n";
+            $this->calculation($this->totalPrice);
         } else {
             $this->change = $this->receivedMoney - $totalPrice;
             echo "\r\nChange is ".$this->change." Baht.\r\n";

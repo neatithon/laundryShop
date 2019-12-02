@@ -205,7 +205,7 @@ class Laundry {
         EOT;
         $printSummaryOption = readline();
         if ($printSummaryOption == "1") {
-            $this->report->exportPDF($this->customerName, $this->type, $this->laundryList, $this->prices, $this->totalPrices);
+            $this->report->exportPDF($this->customerName, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change);
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         } else {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";

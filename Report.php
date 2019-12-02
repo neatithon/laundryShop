@@ -10,6 +10,8 @@ class Report {
     private $totalPrices;
     private $type;
     private $prices;
+    private $receivedMoney;
+    private $change;
     private $mpdf;
     private $location = __DIR__."/Reports";
     private $fileName = "/Laundry list of ";
@@ -63,15 +65,33 @@ class Report {
             <td style='text-align: right; font-weight: 700 !important; border-bottom: 1px solid black;'> Total  ".$total." Baht </td>
         </tr>";
 
+        $this->htmlBody .= 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style='text-align: right;'> Received  ".$this->receivedMoney." Baht </td>
+        </tr>";
+
+        $this->htmlBody .= 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style='text-align: right;'> Change  ".$this->change." Baht </td>
+        </tr>";
+
         $this->htmlBody .= "</table></div></div></body>";
     }
 
-    function exportPDF($customerName, $type, $laundryList, $prices, $totalPrices) {
+    function exportPDF($customerName, $type, $laundryList, $prices, $totalPrices, $receivedMoney, $change) {
         $this->customerName = $customerName;
         $this->laundryList = $laundryList;
         $this->totalPrices = $totalPrices;
         $this->type = $type;
         $this->prices = $prices;
+        $this->receivedMoney = $receivedMoney;
+        $this->change = $change;
         $this->fileName = $this->fileName.$this->customerName.$this->fileType;
         echo "Exporting.....".PHP_EOL;
         $this->bindingToBody();
