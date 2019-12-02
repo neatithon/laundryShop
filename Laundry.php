@@ -18,12 +18,12 @@ class Laundry {
     {
         $this->totalPrices = [];
         $this->type = ["Shirt", "T-shirt", "Pants", "Blanket", "Towel", "Underware"];
-        $this->prices['shirt'] = 5;
-        $this->prices['tShirt'] = 10;
-        $this->prices['pants'] = 10;
-        $this->prices['blanket'] = 50;
-        $this->prices['underware'] = 3;
-        $this->prices['towel'] = 20;
+        $this->prices['Shirt'] = 5;
+        $this->prices['T-shirt'] = 10;
+        $this->prices['Pants'] = 10;
+        $this->prices['Blanket'] = 50;
+        $this->prices['Underware'] = 3;
+        $this->prices['Towel'] = 20;
         $this->report = new Report();
     }
 
@@ -133,17 +133,17 @@ class Laundry {
         EOT;
         $confirmOption = readline("");
         if ($confirmOption == "1") {
-            $laundryList['shirtAmount'] = $this->shirtAmount;
+            $this->laundryList['Shirt'] = $this->shirtAmount;
 
-            $laundryList['tShirtAmount'] = $this->tShirtAmount;
+            $this->laundryList['T-shirt'] = $this->tShirtAmount;
 
-            $laundryList['pantsAmount'] = $this->pantsAmount;
+            $this->laundryList['Pants'] = $this->pantsAmount;
 
-            $laundryList['blanketAmount'] = $this->blanketAmount;
+            $this->laundryList['Blanket'] = $this->blanketAmount;
 
-            $laundryList['towelAmount'] = $this->towelAmount;
+            $this->laundryList['Towel'] = $this->towelAmount;
 
-            $laundryList['underwareAmount'] = $this->underwareAmount;
+            $this->laundryList['Underware'] = $this->underwareAmount;
             $this->checkBill();
         } else {
             $this->laundry();
@@ -161,28 +161,28 @@ class Laundry {
         foreach ($this->type as $type) {
             switch($type) {
                 case "Shirt":
-                    $this->totalPrices['totalShirt'] = $this->shirtAmount*$this->prices['shirt'];
-                    echo $type."                        ".$this->shirtAmount."                      ".$this->prices['shirt']."             ".$this->totalPrices['totalShirt']." ฿\r\n";
+                    $this->totalPrices['Shirt'] = $this->shirtAmount*$this->prices['Shirt'];
+                    echo $type."                        ".$this->shirtAmount."                      ".$this->prices['Shirt']."             ".$this->totalPrices['Shirt']." ฿\r\n";
                 break;
                 case "T-shirt":
-                    $this->totalPrices['totalTShirt'] = $this->tShirtAmount*$this->prices['tShirt'];
-                    echo $type."                      ".$this->tShirtAmount."                     ".$this->prices['tShirt']."            ".$this->totalPrices['totalTShirt']." ฿\r\n";
+                    $this->totalPrices['T-shirt'] = $this->tShirtAmount*$this->prices['T-shirt'];
+                    echo $type."                      ".$this->tShirtAmount."                     ".$this->prices['T-shirt']."            ".$this->totalPrices['T-shirt']." ฿\r\n";
                 break;
                 case "Pants":
-                    $this->totalPrices['totalPants'] = $this->pantsAmount*$this->prices['pants'];
-                    echo $type."                        ".$this->pantsAmount."                     ".$this->prices['pants']."            ".$this->totalPrices['totalPants']." ฿\r\n";
+                    $this->totalPrices['Pants'] = $this->pantsAmount*$this->prices['Pants'];
+                    echo $type."                        ".$this->pantsAmount."                     ".$this->prices['Pants']."            ".$this->totalPrices['Pants']." ฿\r\n";
                 break;
                 case "Blanket":
-                    $this->totalPrices['totalBlanket'] = $this->blanketAmount*$this->prices['blanket'];
-                    echo $type."                      ".$this->blanketAmount."                     ".$this->prices['blanket']."            ".$this->totalPrices['totalBlanket']." ฿\r\n";
+                    $this->totalPrices['Blanket'] = $this->blanketAmount*$this->prices['Blanket'];
+                    echo $type."                      ".$this->blanketAmount."                     ".$this->prices['Blanket']."            ".$this->totalPrices['Blanket']." ฿\r\n";
                 break;
                 case "Towel":
-                    $this->totalPrices['totalTowel'] = $this->towelAmount*$this->prices['towel'];
-                    echo $type."                        ".$this->towelAmount."                     ".$this->prices['towel']."            ".$this->totalPrices['totalTowel']." ฿\r\n";
+                    $this->totalPrices['Towel'] = $this->towelAmount*$this->prices['Towel'];
+                    echo $type."                        ".$this->towelAmount."                     ".$this->prices['Towel']."            ".$this->totalPrices['Towel']." ฿\r\n";
                 break;
                 case "Underware":
-                    $this->totalPrices['totalUnderware'] = $this->underwareAmount*$this->prices['underware'];
-                    echo $type."                    ".$this->underwareAmount."                      ".$this->prices['underware']."             ".$this->totalPrices['totalUnderware']." ฿\r\n";
+                    $this->totalPrices['Underware'] = $this->underwareAmount*$this->prices['Underware'];
+                    echo $type."                    ".$this->underwareAmount."                      ".$this->prices['Underware']."             ".$this->totalPrices['Underware']." ฿\r\n";
                 break;
             }
         }
@@ -201,7 +201,8 @@ class Laundry {
         EOT;
         $printSummaryOption = readline();
         if ($printSummaryOption == "1") {
-            $this->report->exportPDF($this->customerName, $this->laundryList, $this->totalPrices);
+            $this->report->exportPDF($this->customerName, $this->type, $this->laundryList, $this->prices, $this->totalPrices);
+            echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         } else {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         }
