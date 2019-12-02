@@ -29,7 +29,7 @@ if (array_key_exists('help', $opts)) {
 
 \r\n\e[92m----------Laundry options.----------\e[0m \r\n
 EOT;
-$billPayment->payBill();
+$laundry->laundry();
 } else {
     displayError();
 }
