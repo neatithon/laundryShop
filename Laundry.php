@@ -207,5 +207,6 @@ class Laundry {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         }
     }
+
 }
 ?>

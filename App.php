@@ -50,7 +50,7 @@ Options:
 
     Options                   Description
 
-    \e[92m-l\e[0m | \e[92m--laundry\e[0m              Laundry options.
+    \e[92m-l\e[0m | \e[92m--laundry\e[0m            Run laundry program.
     \e[92m-h\e[0m | \e[92m--help\e[0m               Print this manual.                  
 \r\n
 EOT;
@@ -60,10 +60,9 @@ function displayError()
 {
     echo <<<EOT
     
-    \e[91mInvalid arguments!!!\e[0m \r\n
+    \e[91mInvalid arguments!!!\e[0m\r\n
     Used the following command for usage information.
-    \e[93mapp.php -h\e[0m
-
+    \e[93mapp.php -h\e[0m\r\n
 
 EOT;
 }
