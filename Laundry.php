@@ -54,7 +54,7 @@ class Laundry {
     }
 
     function getCustomerName() {
-        $inputData = readline("\r\nInput the customer name.\t");
+        $inputData = readline("\r\nInput the customer name.\t\t\t\t\t\t");
         if (strlen($inputData) == 0) {
             echo "\r\nPlease input the customer name again.\r\n";
             $this->getCustomerName();

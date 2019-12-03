@@ -19,10 +19,10 @@ class Payment {
     }
 
     function receiveMoney() {
-        $inputData = readline("\r\nInput the amount of money.\r\n");
+        $inputData = readline("\r\nInput the amount of money.\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->receivedMoney = (int)$inputData;
-            echo "\r\nReceived ".number_format((float)$this->receivedMoney, 2, '.', ',')." Baht from the customer.\r\n";
+            echo "\r\nReceived \e[32m".number_format((float)$this->receivedMoney, 2, '.', ',')." Baht\e[0m from the customer.";
         } else {
             echo "\r\n\e[31mInvalid input data\e[0m\r\nPlease input a number only.\r\n";
             $this->receiveMoney();
@@ -36,7 +36,7 @@ class Payment {
             $this->calculation($this->totalPrice);
         } else {
             $this->change = $this->receivedMoney - $this->totalPrice;
-            echo "\r\n\t\t\t\t\t\t\t\t\t\t\tChange is ".number_format((float)$this->change, 2, '.', ',')." Baht.\r\n";
+            echo "\r\n\t\t\t\t\t\t\t\t\t\t\t\e[32mChange is ".number_format((float)$this->change, 2, '.', ',')." ฿.\e[0m\r\n";
         }
     }
 
@@ -52,8 +52,8 @@ class Payment {
             $this->discountPrice = $this->totalPrice*$this->discountRate;
             $this->totalPrice = $this->totalPrice - $this->discountPrice;
             $this->discountRate = $this->discountRate*100;
-            echo "\r\nApplied ".$this->discountRate."% discount from total price.\r\n";
-            echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
+            echo "\r\n\e[32mApplied ".$this->discountRate."% discount from total price.\e[0m\r\n";
+            echo "\t\t\t\t\t\t\t\t\t\t\t\e[32mTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\e[0m\r\n";
             $this->calculation();
         } else if ($inputData == "2") {
             echo "\r\nCalculate the total price using normal rate.\r\n";
