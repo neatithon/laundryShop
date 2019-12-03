@@ -19,6 +19,7 @@ class Report {
     private $receivedMoney;
     private $change;
     private $discountPrice;
+    private $discountedPrice;
     private $date;
     private $mpdf;
     private $location;
@@ -99,14 +100,6 @@ class Report {
             <td style='text-align: right; font-weight: 700 !important; border-bottom: 1px solid black;'> Total  ".number_format((float)$total, 2, '.', '')." Baht </td>
         </tr>";
 
-        $this->htmlBody .= 
-        "<tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td style='text-align: right;'> Received  ".number_format((float)$this->receivedMoney, 2, '.', '')." Baht </td>
-        </tr>";
-
         if ($this->discountPrice != 0) {
             $this->htmlBody .= 
         "<tr>
@@ -115,7 +108,22 @@ class Report {
             <td></td>
             <td style='text-align: right;'> Discount  ".number_format((float)$this->discountPrice, 2, '.', '')." Baht </td>
         </tr>";
+        $this->htmlBody .= 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style='text-align: right;'> Discounted price  ".number_format((float)$this->discountedPrice, 2, '.', '')." Baht </td>
+        </tr>";
         }
+
+        $this->htmlBody .= 
+        "<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style='text-align: right;'> Received  ".number_format((float)$this->receivedMoney, 2, '.', '')." Baht </td>
+        </tr>";
 
         $this->htmlBody .= 
         "<tr>
@@ -128,7 +136,7 @@ class Report {
         $this->htmlBody .= "</table></div></div></body>";
     }
 
-    function exportPDF($customerName, $customerNumber, $type, $laundryList, $prices, $totalPrices, $receivedMoney, $change, $discountPrice) {
+    function exportPDF($customerName, $customerNumber, $type, $laundryList, $prices, $totalPrices, $receivedMoney, $change, $discountPrice, $discountedPrice) {
         $this->customerName = $customerName;
         $this->customerNumber = $customerNumber;
         $this->laundryList = $laundryList;
@@ -138,6 +146,7 @@ class Report {
         $this->receivedMoney = $receivedMoney;
         $this->change = $change;
         $this->discountPrice = $discountPrice;
+        $this->discountedPrice = $discountedPrice;
         $this->fileName = $this->fileName.$this->customerName.$this->fileType;
         echo "Exporting.....".PHP_EOL;
         $this->bindingHeader();

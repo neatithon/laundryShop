@@ -43,6 +43,7 @@ class Laundry {
     function laundry() {
         $this->getCustomerName();
         $this->getCustomerNumber();
+        echo "\r\nEnter the amount of laundry list.\r\n(Input 0 if no shirt)\r\n";
         $this->getShirtAmount();
         $this->getTShirtAmount();
         $this->getPantsAmount();
@@ -76,7 +77,7 @@ class Laundry {
     }
 
     function getShirtAmount() {
-        $inputData = readline("\r\nEnter the amount of all shirts.  (Input 0 if no shirt)\r\n");
+        $inputData = readline("Shirts :\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->shirtAmount = (int)$inputData;
         } else {
@@ -86,7 +87,7 @@ class Laundry {
     }
 
     function getTShirtAmount() {
-        $inputData = readline("\r\nEnter the amount of all t-shirts.    (Input 0 if no t-shirt)\r\n");
+        $inputData = readline("T-shirts :\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->tShirtAmount = (int)$inputData;
         } else {
@@ -96,7 +97,7 @@ class Laundry {
     }
 
     function getPantsAmount() {
-        $inputData = readline("\r\nEnter the amount of all pants.   (Input 0 if no pants)\r\n");
+        $inputData = readline("Pants :\t\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->pantsAmount = (int)$inputData;
         } else {
@@ -106,7 +107,7 @@ class Laundry {
     }
 
     function getBlanketAmount() {
-        $inputData = readline("\r\nEnter the amount of all blanket.   (Input 0 if no blanket)\r\n");
+        $inputData = readline("Blanket :\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->blanketAmount = (int)$inputData;
         } else {
@@ -116,7 +117,7 @@ class Laundry {
     }
 
     function getUnderwareAmount() {
-        $inputData = readline("\r\nEnter the amount of all underware.   (Input 0 if no underware)\r\n");
+        $inputData = readline("Underware :\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->underwareAmount = (int)$inputData;
         } else {
@@ -126,7 +127,7 @@ class Laundry {
     }
 
     function getTowelAmount() {
-        $inputData = readline("\r\nEnter the amount of all towel.   (Input 0 if no towel)\r\n");
+        $inputData = readline("Towel :\t\t\t");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->towelAmount = (int)$inputData;
         } else {
@@ -137,24 +138,24 @@ class Laundry {
 
     function printInputtedInfo() {
         echo "\r\nDo you want to check bill the following summary?\r\n".PHP_EOL;
-        echo "      Customer name is : '".$this->customerName."'".PHP_EOL;
+        echo "      Customer name is :\t".$this->customerName.PHP_EOL;
         if ($this->shirtAmount > 0) {
-            echo "      Amount of shirt is : ".$this->shirtAmount.PHP_EOL;
+            echo "      Amount of shirt is :\t".$this->shirtAmount.PHP_EOL;
         }
         if ($this->tShirtAmount > 0) {
-            echo "      Amount of t-shirt is : ".$this->tShirtAmount.PHP_EOL;
+            echo "      Amount of t-shirt is :\t".$this->tShirtAmount.PHP_EOL;
         }
         if ($this->pantsAmount > 0) {
-            echo "      Amount of pants is : ".$this->pantsAmount.PHP_EOL;
+            echo "      Amount of pants is :\t".$this->pantsAmount.PHP_EOL;
         }
         if ($this->blanketAmount > 0) {
-            echo "      Amount of blanket is : ".$this->blanketAmount.PHP_EOL;
+            echo "      Amount of blanket is :\t".$this->blanketAmount.PHP_EOL;
         }
         if ($this->towelAmount > 0) {
-            echo "      Amount of towel is : ".$this->towelAmount.PHP_EOL;
+            echo "      Amount of towel is :\t".$this->towelAmount.PHP_EOL;
         }
         if ($this->underwareAmount > 0) {
-            echo "      Amount of underware is : ".$this->underwareAmount.PHP_EOL;
+            echo "      Amount of underware is :\t".$this->underwareAmount.PHP_EOL;
         }
         echo <<<EOT
         \r\n[1] => Confirm infomation and check bill.\r\n[2] => Cancle and re-enter the information.\r\n
@@ -218,8 +219,11 @@ class Laundry {
                 foreach ($this->totalPrices as $price) {
                     $totalPrice += $price;
                 }
-                echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
-        $this->payment->calculation($totalPrice);
+
+        // echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
+
+        $this->payment->getDiscount($totalPrice);
+
     }
 
     function printSumary() {
@@ -230,7 +234,7 @@ class Laundry {
         EOT;
         $printSummaryOption = readline();
         if ($printSummaryOption == "1") {
-            $this->report->exportPDF($this->customerName, $this->customerNumber, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change, $this->payment->discountPrice);
+            $this->report->exportPDF($this->customerName, $this->customerNumber, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change, $this->payment->discountPrice, $this->payment->totalPrice);
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
         } else {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";

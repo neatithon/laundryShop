@@ -29,20 +29,19 @@ class Payment {
         }
     }
 
-    function calculation($totalPrice) {
-        $this->totalPrice = $totalPrice;
+    function calculation() {
         $this->receiveMoney();
         if ($this->totalPrice > $this->receivedMoney) {
             echo "\r\n\e[31mReceived money is less the the total amount.\e[0m\r\nPlease input again.\r\n";
             $this->calculation($this->totalPrice);
         } else {
-            $this->getDiscount();
             $this->change = $this->receivedMoney - $this->totalPrice;
             echo "\r\nChange is ".number_format((float)$this->change, 2, '.', '')." Baht.\r\n";
         }
     }
 
-    function getDiscount() {
+    function getDiscount($totalPrice) {
+        $this->totalPrice = $totalPrice;
         echo "\r\nIs member is the member of laundry shop?\r\n";
         echo <<<EOT
             [1] => Yes.
@@ -53,9 +52,11 @@ class Payment {
             echo "\r\nApplied 10% discount from total price.\r\n";
             $this->discountPrice = $this->totalPrice*$this->discountRate;
             $this->totalPrice = $this->totalPrice - $this->discountPrice;
+            echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
+            $this->calculation();
         } else {
             echo "\r\nCalculate the total price using normal rate.\r\n";
+            echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
         }
     }
 }
-?>
