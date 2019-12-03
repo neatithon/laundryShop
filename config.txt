@@ -5,11 +5,11 @@ address:
 tel:
 053-200-209
 price:
-35
-30
-30
-10
-20
-200
+35.00 = Shirt
+30.00 = T-shirt
+30.00 = Pants
+10.00 = Underware
+20.00 = Towel
+200.00 = Blanket
 discountForMember(percent):
 10

@@ -36,7 +36,7 @@ class Payment {
             $this->calculation($this->totalPrice);
         } else {
             $this->change = $this->receivedMoney - $this->totalPrice;
-            echo "\r\nChange is ".number_format((float)$this->change, 2, '.', '')." Baht.\r\n";
+            echo "\r\n\t\t\t\t\t\t\t\t\t\t\tChange is ".number_format((float)$this->change, 2, '.', '')." Baht.\r\n";
         }
     }
 
@@ -49,14 +49,16 @@ class Payment {
         EOT;
         $inputData = readline();
         if ($inputData == "1") {
-            echo "\r\nApplied 10% discount from total price.\r\n";
             $this->discountPrice = $this->totalPrice*$this->discountRate;
             $this->totalPrice = $this->totalPrice - $this->discountPrice;
+            $this->discountRate = $this->discountRate*100;
+            echo "\r\nApplied ".$this->discountRate."% discount from total price.\r\n";
             echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
             $this->calculation();
         } else {
             echo "\r\nCalculate the total price using normal rate.\r\n";
             echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
+            $this->calculation();
         }
     }
 }
