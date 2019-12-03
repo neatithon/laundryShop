@@ -51,11 +51,10 @@ class Laundry {
         $this->getTowelAmount();
         $this->getUnderwareAmount();
         $this->printInputtedInfo();
-        $this->printSumary();
     }
 
     function getCustomerName() {
-        $inputData = readline("\r\nInput the customer name.\r\n");
+        $inputData = readline("\r\nInput the customer name.\t");
         if (strlen($inputData) == 0) {
             echo "\r\nPlease input the customer name again.\r\n";
             $this->getCustomerName();
@@ -65,7 +64,9 @@ class Laundry {
     }
 
     function getCustomerNumber() {
-        $inputData = readline("\r\nInput the phone number.\r\n");
+        //$inputData = readline("\r\nInput the phone number.\t\t");
+        echo "\r\nInput the phone number.\t\t";
+        fscanf(STDIN,"%s",$inputData);
         if (strlen($inputData) != 10 && preg_match('/^[0-9]+$/', $inputData)) {
             echo "\r\n\e[31mYou have inputted a wrong format!!\e[0m";
             echo "\r\nPlease input the customer number again.\r\n";
@@ -77,7 +78,9 @@ class Laundry {
     }
 
     function getShirtAmount() {
-        $inputData = readline("Shirts :\t\t");
+        //$inputData = readline("Shirts :\t\t");
+        echo "Shirts :\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->shirtAmount = (int)$inputData;
         } else {
@@ -87,7 +90,9 @@ class Laundry {
     }
 
     function getTShirtAmount() {
-        $inputData = readline("T-shirts :\t\t");
+        // $inputData = readline("T-shirts :\t\t");
+        echo "T-shirts :\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->tShirtAmount = (int)$inputData;
         } else {
@@ -97,7 +102,9 @@ class Laundry {
     }
 
     function getPantsAmount() {
-        $inputData = readline("Pants :\t\t\t");
+        // $inputData = readline("Pants :\t\t\t");
+        echo "Pants :\t\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->pantsAmount = (int)$inputData;
         } else {
@@ -107,7 +114,9 @@ class Laundry {
     }
 
     function getBlanketAmount() {
-        $inputData = readline("Blanket :\t\t");
+        // $inputData = readline("Blanket :\t\t");
+        echo "Blanket :\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->blanketAmount = (int)$inputData;
         } else {
@@ -117,7 +126,9 @@ class Laundry {
     }
 
     function getUnderwareAmount() {
-        $inputData = readline("Underware :\t\t");
+        //$inputData = readline("Underware :\t\t");
+        echo "Underware :\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->underwareAmount = (int)$inputData;
         } else {
@@ -127,7 +138,9 @@ class Laundry {
     }
 
     function getTowelAmount() {
-        $inputData = readline("Towel :\t\t\t");
+        //$inputData = readline("Towel :\t\t\t");
+        echo "Towel :\t\t\t";
+        fscanf(STDIN,"%d",$inputData);
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->towelAmount = (int)$inputData;
         } else {
@@ -160,7 +173,8 @@ class Laundry {
         echo <<<EOT
         \r\n[1] => Confirm infomation and check bill.\r\n[2] => Cancle and re-enter the information.\r\n
         EOT;
-        $confirmOption = readline("");
+        // $confirmOption = readline("");
+        fscanf(STDIN,"%s",$confirmOption);
         if ($confirmOption == "1") {
             $this->laundryList['Shirt'] = $this->shirtAmount;
 
@@ -174,8 +188,11 @@ class Laundry {
 
             $this->laundryList['Underware'] = $this->underwareAmount;
             $this->checkBill();
-        } else {
+        } else if ($confirmOption == "2") {
             $this->laundry();
+        } else {
+            $this->displayWrongChoices();
+            $this->printInputtedInfo();
         }
     }
 
@@ -220,9 +237,10 @@ class Laundry {
                     $totalPrice += $price;
                 }
 
-        // echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
+        echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$totalPrice, 2, '.', '')." ฿\r\n";
 
         $this->payment->getDiscount($totalPrice);
+        $this->printSumary();
 
     }
 
@@ -236,9 +254,16 @@ class Laundry {
         if ($printSummaryOption == "1") {
             $this->report->exportPDF($this->customerName, $this->customerNumber, $this->type, $this->laundryList, $this->prices, $this->totalPrices, $this->payment->receivedMoney, $this->payment->change, $this->payment->discountPrice, $this->payment->totalPrice);
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
-        } else {
+        } else if ($printSummaryOption == "2") {
             echo "\r\nThanks for used our service.\r\nHope we can serve you again.\r\n";
+        } else {
+            $this->displayWrongChoices();
+            $this->printSumary();
         }
+    }
+
+    function displayWrongChoices() {
+        echo "\r\n\e[31mPlease input only provided choices\e[0m\r\n";
     }
 
 }

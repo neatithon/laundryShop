@@ -35,7 +35,7 @@ class Report {
         $this->shopAddress = $this->data->shopAddress;
         $this->shopName = $this->data->shopName;
         $this->location = __DIR__."/Reports";
-        $this->date = date("d-m-Y H:i:s");
+        $this->date = date("Y-m-d H-i-s");
         $this->fileName = "/".$this->date." of ";
         $this->fileType = ".pdf";
         $this->mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A5-L']);
@@ -87,8 +87,8 @@ class Report {
             "<tr>
                 <td>".$item."</td>
                 <td style='text-align: center;'>".$this->laundryList[$item]."</td>
-                <td style='text-align: center;'>".number_format((float)$this->prices[$item], 2, '.', '')."</td>
-                <td style='text-align: right;'>".number_format((float)$this->totalPrices[$item], 2, '.', '')." Baht </td>
+                <td style='text-align: center;'>".number_format((float)$this->prices[$item], 2, '.', ',')."</td>
+                <td style='text-align: right;'>".number_format((float)$this->totalPrices[$item], 2, '.', ',')." Baht </td>
             </tr>";
         }
 
@@ -97,7 +97,7 @@ class Report {
             <td></td>
             <td></td>
             <td></td>
-            <td style='text-align: right; font-weight: 700 !important; border-bottom: 1px solid black;'> Total  ".number_format((float)$total, 2, '.', '')." Baht </td>
+            <td style='text-align: right; font-weight: 700 !important; border-bottom: 1px solid black;'> Total  ".number_format((float)$total, 2, '.', ',')." Baht </td>
         </tr>";
 
         if ($this->discountPrice != 0) {
@@ -106,14 +106,14 @@ class Report {
             <td></td>
             <td></td>
             <td></td>
-            <td style='text-align: right;'> Discount  ".number_format((float)$this->discountPrice, 2, '.', '')." Baht </td>
+            <td style='text-align: right;'> Discount  ".number_format((float)$this->discountPrice, 2, '.', ',')." Baht </td>
         </tr>";
         $this->htmlBody .= 
         "<tr>
             <td></td>
             <td></td>
             <td></td>
-            <td style='text-align: right;'> Discounted price  ".number_format((float)$this->discountedPrice, 2, '.', '')." Baht </td>
+            <td style='text-align: right;'> Discounted price  ".number_format((float)$this->discountedPrice, 2, '.', ',')." Baht </td>
         </tr>";
         }
 
@@ -122,7 +122,7 @@ class Report {
             <td></td>
             <td></td>
             <td></td>
-            <td style='text-align: right;'> Received  ".number_format((float)$this->receivedMoney, 2, '.', '')." Baht </td>
+            <td style='text-align: right;'> Received  ".number_format((float)$this->receivedMoney, 2, '.', ',')." Baht </td>
         </tr>";
 
         $this->htmlBody .= 
@@ -130,7 +130,7 @@ class Report {
             <td></td>
             <td></td>
             <td></td>
-            <td style='text-align: right;'> Change  ".number_format((float)$this->change, 2, '.', '')." Baht </td>
+            <td style='text-align: right;'> Change  ".number_format((float)$this->change, 2, '.', ',')." Baht </td>
         </tr>";
 
         $this->htmlBody .= "</table></div></div></body>";
@@ -156,7 +156,7 @@ class Report {
             $this->mpdf->Output($this->location.$this->fileName, \Mpdf\Output\Destination::FILE);
             echo "\e[92mSuccuessfully exported.\e[0m".PHP_EOL;
         } catch (Exception $e) {
-            echo "\e[32m[Error]: Something went wrong while exporting the file please try again later\e[0m";
+            echo "\e[31m[Error]: Something went wrong while exporting the file please try again later\e[0m";
         }
     }
 

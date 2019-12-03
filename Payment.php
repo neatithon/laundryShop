@@ -22,7 +22,7 @@ class Payment {
         $inputData = readline("\r\nInput the amount of money.\r\n");
         if (preg_match('/^[0-9]+$/', $inputData)) {
             $this->receivedMoney = (int)$inputData;
-            echo "\r\nReceived ".number_format((float)$this->receivedMoney, 2, '.', '')." Baht from the customer.\r\n";
+            echo "\r\nReceived ".number_format((float)$this->receivedMoney, 2, '.', ',')." Baht from the customer.\r\n";
         } else {
             echo "\r\n\e[31mInvalid input data\e[0m\r\nPlease input a number only.\r\n";
             $this->receiveMoney();
@@ -36,7 +36,7 @@ class Payment {
             $this->calculation($this->totalPrice);
         } else {
             $this->change = $this->receivedMoney - $this->totalPrice;
-            echo "\r\n\t\t\t\t\t\t\t\t\t\t\tChange is ".number_format((float)$this->change, 2, '.', '')." Baht.\r\n";
+            echo "\r\n\t\t\t\t\t\t\t\t\t\t\tChange is ".number_format((float)$this->change, 2, '.', ',')." Baht.\r\n";
         }
     }
 
@@ -55,10 +55,17 @@ class Payment {
             echo "\r\nApplied ".$this->discountRate."% discount from total price.\r\n";
             echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
             $this->calculation();
-        } else {
+        } else if ($inputData == "2") {
             echo "\r\nCalculate the total price using normal rate.\r\n";
             echo "\t\t\t\t\t\t\t\t\t\t\tTotal  ".number_format((float)$this->totalPrice, 2, '.', '')." ฿\r\n";
             $this->calculation();
+        } else {
+            $this->displayWrongChoices();
+            $this->getDiscount($this->totalPrice);
         }
+    }
+
+    function displayWrongChoices() {
+        echo "\r\nPlease input only provided choices\r\n";
     }
 }
