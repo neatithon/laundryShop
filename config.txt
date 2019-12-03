@@ -1,0 +1,15 @@
+shopname:
+Kittikarn Laundry
+address:
+129 HK.Rd Suthep, Muang Chiang Mai 50200
+tel:
+053-200-209
+price:
+35.00 = Shirt
+30.00 = T-shirt
+30.00 = Pants
+10.00 = Underware
+20.00 = Towel
+200.00 = Blanket
+discountForMember(percent):
+10
